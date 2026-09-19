@@ -7,14 +7,13 @@ import { C, lerp } from "./tokens";
 export const CursorCtx = createContext<React.MutableRefObject<string>>({ current: "" });
 export const useCursorLabel = () => useContext(CursorCtx);
 
-// ── Primary nav — order here drives both the nav bar and the homepage's
-// in-page section order (see Home.tsx). ─────────────────────────────────────
+// ── Primary nav — order here drives the nav bar. Homepage sections for
+// "Other Things" and "I'm curious about" still exist (see Home.tsx) and
+// stay reachable by scroll or direct link; they're just not in this list.
 export const NAV_ITEMS = [
-  { label: "WORK",              href: "#work" },
-  { label: "OTHER THINGS",      href: "#other-things" },
-  { label: "ABOUT",              href: "#about" },
-  { label: "I'M CURIOUS ABOUT",  href: "#curious" },
-  { label: "CONTACT",            href: "#contact" },
+  { label: "WORK",    href: "#work" },
+  { label: "ABOUT",   href: "#about" },
+  { label: "CONTACT", href: "#contact" },
 ] as const;
 
 export default function Root() {
