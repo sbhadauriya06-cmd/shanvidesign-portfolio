@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400&display=swap');
+@import 'tailwindcss';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: #F5F2EC;
+  color: #181614;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #C2421F;
+  color: #F5F2EC;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom cursor on hero */
+.hero-section,
+.hero-section * {
+  cursor: none !important;
+}
+
+/* Page route transition */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.page-enter {
+  animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hero entrance */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-in      { animation: hero-in 1.0s cubic-bezier(0.22,1,0.36,1) 0.08s both; }
+.hero-in-late { animation: hero-in 1.0s cubic-bezier(0.22,1,0.36,1) 0.28s both; }
+
+/* Dice button roll animation */
+@keyframes dice-roll {
+  0%   { transform: rotate(0deg)   scale(1);    }
+  25%  { transform: rotate(120deg) scale(1.18); }
+  55%  { transform: rotate(280deg) scale(0.92); }
+  80%  { transform: rotate(345deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1);    }
+}
+.dice-rolling {
+  animation: dice-roll 0.52s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+/* Pile object discovery states — applied by RAF via classList */
+.pile-obj-found {
+  filter: drop-shadow(0 0 10px rgba(194,66,31,0.28)) brightness(1.07) !important;
+  transition: filter 0.18s ease !important;
+}
+.pile-obj-look {
+  filter: brightness(1.04) !important;
+  transition: filter 0.22s ease !important;
+}
+
+/* Hide pile on small screens */
+@media (max-width: 860px) {
+  .pile-container {
+    display: none !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Side projects grid: collapse to 2-col on tablet */
+@media (max-width: 1024px) {
+  .side-projects-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .nav-inner {
+    padding: 20px 24px !important;
+  }
+  .hero-section {
+    padding: 0 24px 64px !important;
+  }
+  .section-pad {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .work-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .experiments-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .side-projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .side-projects-grid > * {
+    grid-column: span 1 !important;
+  }
+  .contact-links {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 24px !important;
+  }
+  .footer-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  /* Hide non-essential objects on mobile */
+  .obj-writing,
+  .obj-ashes,
+  .obj-sound {
+    display: none !important;
+  }
+}
