@@ -31,10 +31,23 @@ body {
   padding: 0;
 }
 
-/* Custom cursor on hero */
-.hero-section,
-.hero-section * {
-  cursor: none !important;
+/* Custom cursor on hero — only where a real mouse is the primary input.
+   Never hide the system cursor on touch/hybrid devices; there is nothing
+   to replace it with there. */
+@media (hover: hover) and (pointer: fine) {
+  .hero-section,
+  .hero-section * {
+    cursor: none !important;
+  }
+}
+
+/* Visible keyboard focus, styled to match the editorial palette instead of
+   falling back to (or losing) the browser default ring. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #C2421F;
+  outline-offset: 3px;
 }
 
 /* Page route transition */
@@ -117,6 +130,13 @@ body {
   .work-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
+  }
+  /* Long single-word titles (e.g. "KALAKSHETRA") otherwise overflow the
+     viewport — the clamp() minimum doesn't shrink enough below ~768px. */
+  .work-grid h2,
+  .work-detail-title {
+    font-size: clamp(34px, 11vw, 56px) !important;
+    overflow-wrap: break-word;
   }
   .experiments-grid {
     grid-template-columns: 1fr 1fr !important;

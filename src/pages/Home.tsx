@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import { C } from "../tokens";
 import { useCursorLabel } from "../Root";
 import { useReveal } from "../hooks";
+import SectionHeading from "../components/SectionHeading";
+import Footer from "../components/Footer";
 
 // ─── Page data ────────────────────────────────────────────────────────────────
 
@@ -113,9 +115,9 @@ const SIDE_PROJECTS = [
     aspect: "50%",
   },
   {
-    tag:   "VISUAL RESEARCH",
-    title: "Indian Type Studies",
-    desc:  "Documentation and adaptation of regional script structures into contemporary display type.",
+    tag:   "OTHER EXPERIMENTS",
+    title: "[Placeholder]",
+    desc:  "[Placeholder — replace with a real experiment.]",
     span:  1,
     color: "#D4CFC6",
     aspect: "80%",
@@ -506,11 +508,18 @@ function DiceButton({
   const dots    = face < 0 ? [[11, 11], [18, 18], [25, 25]] as [number,number][] : configs[face];
 
   return (
-    <div
+    <button
+      type="button"
+      aria-label="Rearrange the object collection"
       onMouseEnter={onHoverIn}
       onMouseLeave={onHoverOut}
+      onFocus={onHoverIn}
+      onBlur={onHoverOut}
       onClick={onClick}
-      style={{ position:"absolute", right:"56px", bottom:"232px", width:"36px", height:"36px", zIndex:20, cursor:"none", userSelect:"none" }}
+      style={{
+        position:"absolute", right:"56px", bottom:"232px", width:"36px", height:"36px", zIndex:20,
+        cursor:"none", userSelect:"none", padding:0, background:"none", border:"none",
+      }}
     >
       <svg
         width="36" height="36" viewBox="0 0 36 36"
@@ -522,7 +531,7 @@ function DiceButton({
           <circle key={i} cx={cx} cy={cy} r="2.6" fill={C.ink} />
         ))}
       </svg>
-    </div>
+    </button>
   );
 }
 
@@ -539,7 +548,6 @@ export default function Home() {
   const diceHoverRef = useRef(false);
 
   const cursorLabel = useCursorLabel();
-  const navigate    = useNavigate();
 
   // Scroll reveal anchors
   const revealWork        = useReveal();
@@ -666,29 +674,30 @@ export default function Home() {
 
       {/* ── SELECTED WORK ─────────────────────────────────────────────────── */}
       <section id="work" className="section-pad" ref={revealWork.ref} style={{ padding:"120px 48px 60px", ...revealWork.revealStyle }}>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", borderTop:`1px solid ${C.border}`, paddingTop:"20px", marginBottom:"80px" }}>
-          <span style={{ fontSize:"11px", fontWeight:600, letterSpacing:"0.14em", color:C.muted }}>SELECTED WORK</span>
-          <span style={{ fontSize:"10px", fontWeight:400, letterSpacing:"0.08em", color:C.muted }}>{new Date().getFullYear()}</span>
-        </div>
+        <SectionHeading right={new Date().getFullYear()} marginBottom={80}>SELECTED WORK</SectionHeading>
 
         {PROJECTS.map(project => {
           const active = activeProject === project.num;
           return (
-            <div
+            <Link
               key={project.num}
+              to={`/work/${project.slug}`}
               style={{
-                position:     "relative",
-                overflow:     "hidden",
-                borderTop:    `1px solid ${C.border}`,
-                borderLeft:   `3px solid ${active ? C.accent : "transparent"}`,
-                cursor:       "pointer",
-                transition:   "border-left-color 0.3s ease",
+                position:       "relative",
+                overflow:       "hidden",
+                display:        "block",
+                borderTop:      `1px solid ${C.border}`,
+                borderLeft:     `3px solid ${active ? C.accent : "transparent"}`,
+                textDecoration: "none",
+                color:          "inherit",
+                transition:     "border-left-color 0.3s ease",
               }}
               onMouseEnter={() => setActiveProject(project.num)}
               onMouseLeave={() => setActiveProject(null)}
-              onClick={() => navigate(`/work/${project.slug}`)}
+              onFocus={() => setActiveProject(project.num)}
+              onBlur={() => setActiveProject(null)}
             >
-              {/* Background image on hover */}
+              {/* Background image on hover/focus */}
               <div style={{ position:"absolute", inset:0, zIndex:0, opacity: active ? 1 : 0, transition:"opacity 0.55s ease" }}>
                 <img src={project.imageUrl} alt={project.imageAlt} style={{ width:"100%", height:"100%", objectFit:"cover" }} />
                 <div style={{ position:"absolute", inset:0, background:project.overlay }} />
@@ -727,11 +736,12 @@ export default function Home() {
                   <p style={{ marginTop:"20px", fontSize:"10.5px", fontWeight:600, letterSpacing:"0.1em", opacity: active ? 0.65 : 0.38, transition:"opacity 0.3s ease" }}>{project.meta}</p>
                 </div>
                 <div style={{ alignSelf:"flex-end", paddingBottom:"6px" }}>
+                  {/* Visible at rest (not hover-only) so clickability reads on a static view or touch device; sharpens on hover/focus. */}
                   <span style={{
                     fontSize:      "11px",
                     fontWeight:    700,
                     letterSpacing: "0.12em",
-                    opacity:       active ? 1 : 0,
+                    opacity:       active ? 1 : 0.32,
                     transform:     active ? "translateX(0)" : "translateX(10px)",
                     transition:    "opacity 0.3s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1)",
                     display:       "block",
@@ -741,7 +751,7 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
         <div style={{ borderTop:`1px solid ${C.border}` }} />
@@ -749,9 +759,7 @@ export default function Home() {
 
       {/* ── CURIOSITIES ───────────────────────────────────────────────────── */}
       <section className="section-pad" ref={revealCuriosities.ref} style={{ padding:"120px 48px", ...revealCuriosities.revealStyle }}>
-        <div style={{ borderTop:`1px solid ${C.border}`, paddingTop:"20px", marginBottom:"72px" }}>
-          <span style={{ fontSize:"11px", fontWeight:600, letterSpacing:"0.14em", color:C.muted }}>I&apos;M CURIOUS ABOUT...</span>
-        </div>
+        <SectionHeading>I&apos;M CURIOUS ABOUT...</SectionHeading>
         {CURIOSITIES.map((q, i) => (
           <div
             key={i}
@@ -783,10 +791,7 @@ export default function Home() {
 
       {/* ── OTHER THINGS ──────────────────────────────────────────────────── */}
       <section className="section-pad" ref={revealSide.ref} style={{ padding:"0 48px 120px", ...revealSide.revealStyle }}>
-        <div style={{ borderTop:`1px solid ${C.border}`, paddingTop:"20px", marginBottom:"56px", display:"flex", justifyContent:"space-between", alignItems:"baseline" }}>
-          <span style={{ fontSize:"11px", fontWeight:600, letterSpacing:"0.14em", color:C.muted }}>OTHER THINGS I&apos;VE MESSED WITH</span>
-          <span style={{ fontSize:"10px", fontWeight:400, color:C.muted }}>no subpages, just the work</span>
-        </div>
+        <SectionHeading right="no subpages, just the work" marginBottom={56}>OTHER THINGS I&apos;VE MESSED WITH</SectionHeading>
 
         <div
           style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:"3px" }}
@@ -891,12 +896,8 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div
-          className="footer-row"
-          style={{ marginTop:"120px", display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.border}`, paddingTop:"24px" }}
-        >
-          <span style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.14em", color:C.muted }}>SHANVI BHADAURIYA</span>
-          <span style={{ fontSize:"10px", fontWeight:500, letterSpacing:"0.08em", color:C.muted }}>PRODUCT DESIGNER</span>
+        <div style={{ marginTop:"120px" }}>
+          <Footer padding="24px 0" />
         </div>
       </section>
     </div>

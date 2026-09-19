@@ -1,6 +1,8 @@
 import { useParams, useNavigate, Link } from "react-router";
 import { C } from "../tokens";
 import { useReveal, useReadingProgress } from "../hooks";
+import MediaBlock from "../components/MediaBlock";
+import Footer from "../components/Footer";
 
 // ─── Project data ─────────────────────────────────────────────────────────────
 
@@ -188,26 +190,6 @@ const PROJECTS: Record<string, WorkProject> = {
   },
 };
 
-// ─── Image placeholder ────────────────────────────────────────────────────────
-
-function ImgBlock({ label, tall }: { label: string; tall?: boolean }) {
-  return (
-    <div
-      style={{
-        width:          "100%",
-        paddingTop:     tall ? "66%" : "56%",
-        background:     C.surface,
-        position:       "relative",
-        borderRadius:   "2px",
-      }}
-    >
-      <div style={{ position:"absolute", inset:0, display:"flex", alignItems:"flex-end", padding:"16px 20px" }}>
-        <span style={{ fontSize:"9px", fontWeight:600, letterSpacing:"0.14em", color:C.muted }}>{label.toUpperCase()}</span>
-      </div>
-    </div>
-  );
-}
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function WorkDetail() {
@@ -273,6 +255,7 @@ export default function WorkDetail() {
         {/* Title */}
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", alignItems:"end", gap:"48px" }} className="work-grid hero-in-late">
           <h1
+            className="work-detail-title"
             style={{ fontSize:"clamp(72px,10vw,160px)", fontWeight:800, lineHeight:0.88, letterSpacing:"-0.04em", color:C.ink }}
           >
             {project.title}
@@ -333,11 +316,11 @@ export default function WorkDetail() {
                 <div>
                   <p style={{ fontSize:"clamp(15px,1.5vw,18px)", fontWeight:400, lineHeight:1.75, color:C.dim }}>{section.body}</p>
                 </div>
-                <ImgBlock label={section.imgLabel ?? section.heading} tall />
+                <MediaBlock label={section.imgLabel ?? section.heading} tall />
               </>
             ) : (
               <>
-                <ImgBlock label={section.imgLabel ?? section.heading} tall />
+                <MediaBlock label={section.imgLabel ?? section.heading} tall />
                 <div>
                   <p style={{ fontSize:"clamp(15px,1.5vw,18px)", fontWeight:400, lineHeight:1.75, color:C.dim }}>{section.body}</p>
                 </div>
@@ -371,34 +354,27 @@ export default function WorkDetail() {
 
       {/* ── Navigation: prev / next ───────────────────────────────────────── */}
       <section ref={revealNav.ref} style={{ display:"grid", gridTemplateColumns:"1fr 1fr", ...revealNav.revealStyle }}>
-        <div
-          style={{ padding:"56px 48px", borderRight:`1px solid ${C.border}`, borderTop:`1px solid ${C.border}`, cursor:"pointer", transition:"background 0.25s ease" }}
-          onClick={() => navigate(`/work/${project.prevSlug}`)}
+        <Link
+          to={`/work/${project.prevSlug}`}
+          style={{ display:"block", padding:"56px 48px", borderRight:`1px solid ${C.border}`, borderTop:`1px solid ${C.border}`, textDecoration:"none", color:"inherit", transition:"background 0.25s ease" }}
           onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = C.surface; }}
           onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = ""; }}
         >
           <p style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.12em", color:C.muted, marginBottom:"14px" }}>← PREVIOUS</p>
           <p style={{ fontSize:"clamp(20px,2.8vw,36px)", fontWeight:800, letterSpacing:"-0.03em", color:C.ink, lineHeight:1.05 }}>{project.prevTitle}</p>
-        </div>
-        <div
-          style={{ padding:"56px 48px", borderTop:`1px solid ${C.border}`, cursor:"pointer", transition:"background 0.25s ease", textAlign:"right" }}
-          onClick={() => navigate(`/work/${project.nextSlug}`)}
+        </Link>
+        <Link
+          to={`/work/${project.nextSlug}`}
+          style={{ display:"block", padding:"56px 48px", borderTop:`1px solid ${C.border}`, textDecoration:"none", color:"inherit", transition:"background 0.25s ease", textAlign:"right" }}
           onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = C.surface; }}
           onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = ""; }}
         >
           <p style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.12em", color:C.muted, marginBottom:"14px" }}>NEXT →</p>
           <p style={{ fontSize:"clamp(20px,2.8vw,36px)", fontWeight:800, letterSpacing:"-0.03em", color:C.ink, lineHeight:1.05 }}>{project.nextTitle}</p>
-        </div>
+        </Link>
       </section>
 
-      {/* ── Footer ────────────────────────────────────────────────────────── */}
-      <div
-        style={{ padding:"24px 48px", display:"flex", justifyContent:"space-between", alignItems:"center", borderTop:`1px solid ${C.border}` }}
-        className="footer-row"
-      >
-        <span style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.14em", color:C.muted }}>SHANVI BHADAURIYA</span>
-        <span style={{ fontSize:"10px", fontWeight:500, letterSpacing:"0.08em", color:C.muted }}>PRODUCT DESIGNER</span>
-      </div>
+      <Footer />
     </div>
   );
 }
