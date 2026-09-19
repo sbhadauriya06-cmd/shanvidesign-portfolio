@@ -7,6 +7,16 @@ import { C, lerp } from "./tokens";
 export const CursorCtx = createContext<React.MutableRefObject<string>>({ current: "" });
 export const useCursorLabel = () => useContext(CursorCtx);
 
+// ── Primary nav — order here drives both the nav bar and the homepage's
+// in-page section order (see Home.tsx). ─────────────────────────────────────
+export const NAV_ITEMS = [
+  { label: "WORK",              href: "#work" },
+  { label: "OTHER THINGS",      href: "#other-things" },
+  { label: "ABOUT",              href: "#about" },
+  { label: "I'M CURIOUS ABOUT",  href: "#curious" },
+  { label: "CONTACT",            href: "#contact" },
+] as const;
+
 export default function Root() {
   const [navSolid,     setNavSolid]     = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -111,7 +121,7 @@ export default function Root() {
           >
             SHANVI BHADAURIYA
           </Link>
-          <div style={{ display:"flex", gap:"32px" }}>
+          <div className="nav-links" style={{ display:"flex", gap:"32px" }}>
             {isDetail ? (
               <Link
                 to="/"
@@ -122,15 +132,15 @@ export default function Root() {
                 ← INDEX
               </Link>
             ) : (
-              isHome && ["WORK", "ABOUT", "CONTACT"].map(item => (
+              isHome && NAV_ITEMS.map(item => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+                  key={item.href}
+                  href={item.href}
                   style={{ fontSize:"11px", fontWeight:500, letterSpacing:"0.1em", textDecoration:"none", color:C.ink, opacity:0.5, transition:"opacity 0.2s" }}
                   onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
                   onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}
                 >
-                  {item}
+                  {item.label}
                 </a>
               ))
             )}

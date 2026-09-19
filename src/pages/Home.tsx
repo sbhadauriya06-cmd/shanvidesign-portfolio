@@ -637,6 +637,12 @@ export default function Home() {
             transition: composed ? "transform 1.6s cubic-bezier(0.22,0.1,0.08,1)" : "none",
           }}
         >
+          <p
+            className="hero-in"
+            style={{ marginBottom:"18px", fontSize:"clamp(15px,1.55vw,19px)", fontWeight:400, color:C.muted, lineHeight:1.62 }}
+          >
+            I&apos;m Shanvi, a product designer.
+          </p>
           <h1
             className="hero-in"
             style={{
@@ -757,40 +763,8 @@ export default function Home() {
         <div style={{ borderTop:`1px solid ${C.border}` }} />
       </section>
 
-      {/* ── CURIOSITIES ───────────────────────────────────────────────────── */}
-      <section className="section-pad" ref={revealCuriosities.ref} style={{ padding:"120px 48px", ...revealCuriosities.revealStyle }}>
-        <SectionHeading>I&apos;M CURIOUS ABOUT...</SectionHeading>
-        {CURIOSITIES.map((q, i) => (
-          <div
-            key={i}
-            style={{
-              padding:         "28px 0",
-              borderBottom:    `1px solid ${C.border}`,
-              borderLeft:      `3px solid ${hoveredCuriosity === i ? C.accent : "transparent"}`,
-              paddingLeft:     hoveredCuriosity === i ? "22px" : "0px",
-              transition:      "border-left-color 0.22s ease, padding-left 0.4s cubic-bezier(0.22,1,0.36,1)",
-            }}
-            onMouseEnter={() => setHoveredCuriosity(i)}
-            onMouseLeave={() => setHoveredCuriosity(null)}
-          >
-            <p style={{
-              fontSize:      "clamp(26px,3.8vw,50px)",
-              fontWeight:    700,
-              lineHeight:    1.18,
-              letterSpacing: "-0.022em",
-              color:         hoveredCuriosity === i ? C.accent : C.ink,
-              maxWidth:      "880px",
-              transition:    "color 0.22s ease",
-              cursor:        "default",
-            }}>
-              {q}
-            </p>
-          </div>
-        ))}
-      </section>
-
       {/* ── OTHER THINGS ──────────────────────────────────────────────────── */}
-      <section className="section-pad" ref={revealSide.ref} style={{ padding:"0 48px 120px", ...revealSide.revealStyle }}>
+      <section id="other-things" className="section-pad" ref={revealSide.ref} style={{ padding:"120px 48px", ...revealSide.revealStyle }}>
         <SectionHeading right="no subpages, just the work" marginBottom={56}>OTHER THINGS I&apos;VE MESSED WITH</SectionHeading>
 
         <div
@@ -857,6 +831,38 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ── I'M CURIOUS ABOUT ─────────────────────────────────────────────── */}
+      <section id="curious" className="section-pad" ref={revealCuriosities.ref} style={{ padding:"0 48px 120px", ...revealCuriosities.revealStyle }}>
+        <SectionHeading>I&apos;M CURIOUS ABOUT...</SectionHeading>
+        {CURIOSITIES.map((q, i) => (
+          <div
+            key={i}
+            style={{
+              padding:         "28px 0",
+              borderBottom:    `1px solid ${C.border}`,
+              borderLeft:      `3px solid ${hoveredCuriosity === i ? C.accent : "transparent"}`,
+              paddingLeft:     hoveredCuriosity === i ? "22px" : "0px",
+              transition:      "border-left-color 0.22s ease, padding-left 0.4s cubic-bezier(0.22,1,0.36,1)",
+            }}
+            onMouseEnter={() => setHoveredCuriosity(i)}
+            onMouseLeave={() => setHoveredCuriosity(null)}
+          >
+            <p style={{
+              fontSize:      "clamp(26px,3.8vw,50px)",
+              fontWeight:    700,
+              lineHeight:    1.18,
+              letterSpacing: "-0.022em",
+              color:         hoveredCuriosity === i ? C.accent : C.ink,
+              maxWidth:      "880px",
+              transition:    "color 0.22s ease",
+              cursor:        "default",
+            }}>
+              {q}
+            </p>
+          </div>
+        ))}
       </section>
 
       {/* ── CONTACT ───────────────────────────────────────────────────────── */}

@@ -116,6 +116,14 @@ button:focus-visible,
   .nav-inner {
     padding: 20px 24px !important;
   }
+  /* 5 nav items (incl. "I'M CURIOUS ABOUT") don't fit one row at mobile
+     widths — wrap instead of overflowing off-screen. */
+  .nav-links {
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    row-gap: 8px !important;
+    column-gap: 16px !important;
+  }
   .hero-section {
     padding: 0 24px 64px !important;
   }
