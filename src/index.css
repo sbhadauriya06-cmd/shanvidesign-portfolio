@@ -83,15 +83,24 @@ button:focus-visible,
   transition: filter 0.22s ease !important;
 }
 
-/* Hide pile on small screens. Without the pile to fill the frame, a full
-   100vh hero (sized for the desktop composition) leaves a large dead gap
-   between the text and the scroll hint — shorten it to match. */
-@media (max-width: 860px) {
-  .pile-container {
-    display: none !important;
-  }
-  .hero-section {
-    min-height: 82vh !important;
+/* Hero object stage — the letter-forming object field. Fixed aspect ratio
+   (matches LETTER_BOX in src/hero/letterShapes.ts) so every composition's
+   normalized coordinates map onto it the same way at any size; only its
+   position/scale on the page changes per breakpoint. Recognizable at every
+   size, per the brief, rather than hidden below a cutoff. */
+.hero-object-stage {
+  position: absolute;
+  right: 0;
+  top: 6%;
+  width: 46%;
+  aspect-ratio: 100 / 140;
+  pointer-events: none;
+}
+
+@media (max-width: 1100px) {
+  .hero-object-stage {
+    width: 54%;
+    top: 4%;
   }
 }
 
@@ -125,6 +134,20 @@ button:focus-visible,
   }
   .hero-section {
     padding: 96px 24px 56px !important;
+    min-height: 100vh !important;
+  }
+  /* Below this width the stage moves under the (now much smaller) text
+     instead of beside it. Sized from height, not width — with this aspect
+     ratio, deriving height from a width that's also a % of the *hero's*
+     width let the box get taller than the hero itself. */
+  .hero-object-stage {
+    left: 50%;
+    right: auto;
+    top: auto;
+    bottom: 16%;
+    width: auto;
+    height: 28vh;
+    transform: translateX(-50%);
   }
   .section-pad {
     padding-left: 24px !important;
