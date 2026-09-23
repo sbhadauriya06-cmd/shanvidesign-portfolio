@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router";
-import { C } from "../tokens";
-import { useCursorLabel } from "../Root";
+import { C, displayFont } from "../tokens";
 import { useReveal } from "../hooks";
 import SectionHeading from "../components/SectionHeading";
 import Footer from "../components/Footer";
@@ -498,10 +497,9 @@ function ObjContent({ id }: { id: string }) {
 // ─── Dice button ──────────────────────────────────────────────────────────────
 
 function DiceButton({
-  variant, rolling, onClick, onHoverIn, onHoverOut,
+  variant, rolling, onClick,
 }: {
-  variant: number; rolling: boolean;
-  onClick: () => void; onHoverIn: () => void; onHoverOut: () => void;
+  variant: number; rolling: boolean; onClick: () => void;
 }) {
   const face    = variant < 0 ? -1 : variant;
   const configs = [[[18, 18]], [[11, 11], [25, 25]], [[11, 11], [18, 18], [25, 25]]] as [number,number][][];
@@ -511,14 +509,10 @@ function DiceButton({
     <button
       type="button"
       aria-label="Rearrange the object collection"
-      onMouseEnter={onHoverIn}
-      onMouseLeave={onHoverOut}
-      onFocus={onHoverIn}
-      onBlur={onHoverOut}
       onClick={onClick}
       style={{
         position:"absolute", right:"56px", bottom:"232px", width:"36px", height:"36px", zIndex:20,
-        cursor:"none", userSelect:"none", padding:0, background:"none", border:"none",
+        userSelect:"none", padding:0, background:"none", border:"none", cursor:"pointer",
       }}
     >
       <svg
@@ -545,9 +539,6 @@ export default function Home() {
 
   const pileRef      = useRef<HTMLDivElement>(null);
   const workEntryRef = useRef<HTMLDivElement>(null);
-  const diceHoverRef = useRef(false);
-
-  const cursorLabel = useCursorLabel();
 
   // Scroll reveal anchors
   const revealWork        = useReveal();
@@ -555,11 +546,6 @@ export default function Home() {
   const revealSide        = useReveal();
   const revealAbout       = useReveal();
   const revealContact     = useReveal();
-
-  // Set / clear cursor labels via context ref
-  useEffect(() => {
-    return () => { cursorLabel.current = ""; };
-  }, [cursorLabel]);
 
   // ── Dice click ───────────────────────────────────────────────────────────
 
@@ -584,7 +570,7 @@ export default function Home() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         className="hero-section"
-        style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-end", padding:"0 48px 88px" }}
+        style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-start", padding:"clamp(100px,13vh,152px) 48px 88px" }}
       >
 
         {/* Objects */}
@@ -624,8 +610,6 @@ export default function Home() {
             variant={diceVariant}
             rolling={diceRolling}
             onClick={handleDiceClick}
-            onHoverIn={() => { diceHoverRef.current = true; cursorLabel.current = "ROLL"; }}
-            onHoverOut={() => { diceHoverRef.current = false; cursorLabel.current = ""; }}
           />
         </div>
 
@@ -639,14 +623,15 @@ export default function Home() {
         >
           <p
             className="hero-in"
-            style={{ marginBottom:"18px", fontSize:"clamp(15px,1.55vw,19px)", fontWeight:400, color:C.muted, lineHeight:1.62 }}
+            style={{ marginBottom:"14px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, lineHeight:1.55 }}
           >
             I&apos;m Shanvi, a product designer.
           </p>
           <h1
             className="hero-in"
             style={{
-              fontSize:"clamp(68px,11vw,178px)", fontWeight:800, lineHeight:0.91,
+              fontFamily:displayFont,
+              fontSize:"clamp(56px,9vw,152px)", fontWeight:700, lineHeight:0.95,
               letterSpacing:typoLetterSpacing, color:C.ink,
               transition: composed ? "letter-spacing 1.8s cubic-bezier(0.22,0.1,0.08,1)" : "none",
             }}
@@ -655,7 +640,7 @@ export default function Home() {
           </h1>
           <p
             className="hero-in-late"
-            style={{ marginTop:"28px", fontSize:"clamp(15px,1.55vw,19px)", fontWeight:400, color:C.muted, maxWidth:"380px", lineHeight:1.62 }}
+            style={{ marginTop:"22px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, maxWidth:"370px", lineHeight:1.55 }}
           >
             Product designer interested in people,<br />products & the systems around them.
           </p>
@@ -665,9 +650,7 @@ export default function Home() {
         <div
           ref={workEntryRef}
           onClick={() => document.getElementById("work")?.scrollIntoView({ behavior:"smooth" })}
-          onMouseEnter={() => { cursorLabel.current = "ENTER →"; }}
-          onMouseLeave={() => { cursorLabel.current = ""; }}
-          style={{ position:"absolute", bottom:0, left:0, right:0, height:"18%", zIndex:25, cursor:"none" }}
+          style={{ position:"absolute", bottom:0, left:0, right:0, height:"18%", zIndex:25, cursor:"pointer" }}
         >
           <div style={{ position:"absolute", bottom:"32px", right:"48px", display:"flex", alignItems:"center", gap:"10px", opacity:0.35 }}>
             <span style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.14em", color:C.ink }}>SELECTED WORK</span>
@@ -735,7 +718,7 @@ export default function Home() {
                   }}>
                     {project.num} · {project.year}
                   </span>
-                  <h2 style={{ fontSize:"clamp(48px,7vw,120px)", fontWeight:800, lineHeight:0.88, letterSpacing:"-0.035em" }}>{project.title}</h2>
+                  <h2 style={{ fontFamily:displayFont, fontSize:"clamp(48px,7vw,120px)", fontWeight:700, lineHeight:0.88, letterSpacing:"-0.035em" }}>{project.title}</h2>
                 </div>
                 <div style={{ alignSelf:"center", paddingBottom:"6px" }}>
                   <p style={{ fontSize:"clamp(15px,1.5vw,18px)", fontWeight:400, lineHeight:1.55, maxWidth:"440px" }}>{project.statement}</p>
@@ -808,7 +791,7 @@ export default function Home() {
             <span style={{ fontSize:"10px", fontWeight:500, letterSpacing:"0.1em", color:C.muted }}>[PORTRAIT PHOTOGRAPH]</span>
           </div>
           <div>
-            <h2 style={{ fontSize:"clamp(44px,6vw,92px)", fontWeight:800, lineHeight:0.93, letterSpacing:"-0.035em", marginBottom:"44px" }}>HI, I&apos;M<br />SHANVI.</h2>
+            <h2 style={{ fontFamily:displayFont, fontSize:"clamp(44px,6vw,92px)", fontWeight:700, lineHeight:0.93, letterSpacing:"-0.035em", marginBottom:"44px" }}>HI, I&apos;M<br />SHANVI.</h2>
             <p style={{ fontSize:"clamp(16px,1.6vw,19px)", fontWeight:400, lineHeight:1.65, color:C.dim, marginBottom:"32px", maxWidth:"440px" }}>
               I&apos;m a product designer who likes figuring out why things work the way they do — and what happens when they don&apos;t.
             </p>
@@ -850,6 +833,7 @@ export default function Home() {
             onMouseLeave={() => setHoveredCuriosity(null)}
           >
             <p style={{
+              fontFamily:    displayFont,
               fontSize:      "clamp(26px,3.8vw,50px)",
               fontWeight:    700,
               lineHeight:    1.18,
@@ -867,7 +851,7 @@ export default function Home() {
 
       {/* ── CONTACT ───────────────────────────────────────────────────────── */}
       <section id="contact" className="section-pad" ref={revealContact.ref} style={{ padding:"120px 48px 100px", borderTop:`1px solid ${C.border}`, ...revealContact.revealStyle }}>
-        <h2 style={{ fontSize:"clamp(60px,10vw,156px)", fontWeight:800, lineHeight:0.88, letterSpacing:"-0.04em", marginBottom:"36px" }}>HAVE<br />SOMETHING<br />MESSY?</h2>
+        <h2 style={{ fontFamily:displayFont, fontSize:"clamp(60px,10vw,156px)", fontWeight:700, lineHeight:0.88, letterSpacing:"-0.04em", marginBottom:"36px" }}>HAVE<br />SOMETHING<br />MESSY?</h2>
         <p style={{ fontSize:"clamp(17px,1.8vw,21px)", fontWeight:400, color:C.muted, marginBottom:"64px" }}>I&apos;d probably like it.</p>
         <div className="contact-links" style={{ display:"flex", gap:"48px", alignItems:"center", flexWrap:"wrap" }}>
           <a

@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400&display=swap');
+/* Homepage-only display face — see tokens.ts `displayFont` for scope + how to
+   revert. Space Grotesk tops out at 700 (no 800/900), so display elements
+   using it are set to weight 700 rather than the body face's 800. */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap');
 @import 'tailwindcss';
 
 html,
@@ -29,16 +33,6 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-/* Custom cursor on hero — only where a real mouse is the primary input.
-   Never hide the system cursor on touch/hybrid devices; there is nothing
-   to replace it with there. */
-@media (hover: hover) and (pointer: fine) {
-  .hero-section,
-  .hero-section * {
-    cursor: none !important;
-  }
 }
 
 /* Visible keyboard focus, styled to match the editorial palette instead of
@@ -89,10 +83,15 @@ button:focus-visible,
   transition: filter 0.22s ease !important;
 }
 
-/* Hide pile on small screens */
+/* Hide pile on small screens. Without the pile to fill the frame, a full
+   100vh hero (sized for the desktop composition) leaves a large dead gap
+   between the text and the scroll hint — shorten it to match. */
 @media (max-width: 860px) {
   .pile-container {
     display: none !important;
+  }
+  .hero-section {
+    min-height: 82vh !important;
   }
 }
 
@@ -125,7 +124,7 @@ button:focus-visible,
     column-gap: 16px !important;
   }
   .hero-section {
-    padding: 0 24px 64px !important;
+    padding: 96px 24px 56px !important;
   }
   .section-pad {
     padding-left: 24px !important;
