@@ -87,21 +87,28 @@ button:focus-visible,
    (matches LETTER_BOX in src/hero/letterShapes.ts) so every composition's
    normalized coordinates map onto it the same way at any size; only its
    position/scale on the page changes per breakpoint. Recognizable at every
-   size, per the brief, rather than hidden below a cutoff. */
+   size, per the brief, rather than hidden below a cutoff.
+
+   Sized from min(vw, vh) rather than a single hard-coded axis: a
+   width-only percentage would make this fixed-aspect (portrait) box taller
+   than the viewport itself on short/wide screens; a height-only value
+   would let it grow too wide and crowd the headline on narrow/tall ones.
+   Taking the smaller of the two keeps it a considered, contained shape at
+   any viewport proportions instead of just "the right column". Vertically
+   centered so it shares the same visual middle as the (shorter, two-line)
+   text block — one frame, not a text row sitting above a separate object
+   block. */
 .hero-object-stage {
   position: absolute;
-  right: 0;
-  top: 6%;
-  width: 46%;
+  right: 5%;
+  /* Not a literal 50% center: that put the top edge above the nav (before
+     it gains a background on scroll) and the bottom edge into the
+     "SELECTED WORK" hint's corner. This reads as centered against the
+     text without touching either. */
+  top: max(16%, 100px);
+  width: min(40vw, 42vh);
   aspect-ratio: 100 / 140;
   pointer-events: none;
-}
-
-@media (max-width: 1100px) {
-  .hero-object-stage {
-    width: 54%;
-    top: 4%;
-  }
 }
 
 /* Reduced motion */
@@ -144,9 +151,9 @@ button:focus-visible,
     left: 50%;
     right: auto;
     top: auto;
-    bottom: 16%;
+    bottom: 15%;
     width: auto;
-    height: 28vh;
+    height: 32vh;
     transform: translateX(-50%);
   }
   .section-pad {

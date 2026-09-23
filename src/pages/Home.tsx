@@ -213,7 +213,7 @@ export default function Home() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         className="hero-section"
-        style={{ position:"relative", minHeight:"100vh", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-start", padding:"clamp(100px,13vh,152px) 48px 88px" }}
+        style={{ position:"relative", minHeight:"82vh", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-start", padding:"clamp(100px,13vh,152px) 48px 88px" }}
       >
 
         {/* Objects — a still-life field that reassembles into D-E-S-I-G-N */}
@@ -235,7 +235,7 @@ export default function Home() {
         >
           <p
             className="hero-in"
-            style={{ marginBottom:"14px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, lineHeight:1.55 }}
+            style={{ marginBottom:"18px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, lineHeight:1.55 }}
           >
             I&apos;m Shanvi, a product designer.
           </p>
@@ -250,12 +250,6 @@ export default function Home() {
           >
             I FIGURE<br />THINGS<br />OUT.
           </h1>
-          <p
-            className="hero-in-late"
-            style={{ marginTop:"22px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, maxWidth:"370px", lineHeight:1.55 }}
-          >
-            Product designer interested in people,<br />products & the systems around them.
-          </p>
         </div>
 
         {/* Work entry zone */}
