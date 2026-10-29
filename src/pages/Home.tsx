@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { C, displayFont } from "../tokens";
 import { useReveal } from "../hooks";
 import SectionHeading from "../components/SectionHeading";
 import Footer from "../components/Footer";
-import HeroObjectField from "../hero/HeroObjectField";
-import { SEQUENCE } from "../hero/letterShapes";
+import DeskField from "../hero/DeskField";
+import { TEXT_LAYER } from "../hero/layouts";
 
 // ─── Page data ────────────────────────────────────────────────────────────────
 
@@ -125,49 +125,11 @@ const SIDE_PROJECTS = [
   },
 ];
 
-// ─── Roll button ──────────────────────────────────────────────────────────────
-
-function DiceButton({
-  pipIndex, rolling, onClick,
-}: {
-  pipIndex: number; rolling: boolean; onClick: () => void;
-}) {
-  const configs = [[[18, 18]], [[11, 11], [25, 25]], [[11, 11], [18, 18], [25, 25]]] as [number,number][][];
-  const dots    = configs[pipIndex % configs.length];
-
-  return (
-    <button
-      type="button"
-      aria-label="Advance to the next composition"
-      onClick={onClick}
-      style={{
-        position:"absolute", right:"56px", bottom:"232px", width:"36px", height:"36px", zIndex:20,
-        userSelect:"none", padding:0, background:"none", border:"none", cursor:"pointer",
-      }}
-    >
-      <svg
-        width="36" height="36" viewBox="0 0 36 36"
-        className={rolling ? "dice-rolling" : ""}
-        style={{ display:"block", transformOrigin:"18px 18px" }}
-      >
-        <rect x="2" y="2" width="32" height="32" rx="6" ry="6" fill={C.paper} stroke={C.ink} strokeWidth="1.5" />
-        {dots.map(([cx, cy], i) => (
-          <circle key={i} cx={cx} cy={cy} r="2.6" fill={C.ink} />
-        ))}
-      </svg>
-    </button>
-  );
-}
-
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const [seqIndex,         setSeqIndex]          = useState(0);
-  const [diceRolling,      setDiceRolling]       = useState(false);
   const [activeProject,    setActiveProject]     = useState<string | null>(null);
   const [hoveredCuriosity, setHoveredCuriosity]  = useState<number | null>(null);
-
-  const workEntryRef = useRef<HTMLDivElement>(null);
 
   // Scroll reveal anchors
   const revealWork        = useReveal();
@@ -176,63 +138,20 @@ export default function Home() {
   const revealAbout       = useReveal();
   const revealContact     = useReveal();
 
-  const advance = () => setSeqIndex(i => (i + 1) % SEQUENCE.length);
-
-  // ── Automatic sequence: RANDOM -> D -> E -> S -> I -> G -> N -> RANDOM ─────
-  // A manual roll (below) also calls setSeqIndex, which re-runs this effect
-  // and cancels/reschedules the pending timer — so the two never fight.
-  useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) return; // stay put; the roll button still works
-    const holdMs = SEQUENCE[seqIndex] === "RANDOM" ? 3600 : 2600;
-    const timer = setTimeout(advance, holdMs);
-    return () => clearTimeout(timer);
-  }, [seqIndex]);
-
-  // ── Roll click — advances the sequence by one step ─────────────────────────
-
-  const handleDiceClick = () => {
-    if (diceRolling) return;
-    setDiceRolling(true);
-    setTimeout(() => {
-      advance();
-      setDiceRolling(false);
-    }, 480);
-  };
-
-  // ── Derived state ────────────────────────────────────────────────────────
-
-  const currentKey         = SEQUENCE[seqIndex];
-  const composed           = currentKey !== "RANDOM";
-  const typoLetterSpacing  = composed ? "-0.042em" : "-0.028em";
-  const typoTranslateY     = composed ? -3 : 0;
-
   return (
     <div>
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         className="hero-section"
-        style={{ position:"relative", minHeight:"82vh", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-start", padding:"clamp(100px,13vh,152px) 48px 88px" }}
+        style={{ position:"relative", minHeight:"max(100vh, 660px)", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-start", padding:"clamp(100px,13vh,152px) 48px 88px" }}
       >
 
-        {/* Objects — a still-life field that reassembles into D-E-S-I-G-N */}
-        <HeroObjectField stateKey={currentKey} />
-
-        <DiceButton
-          pipIndex={seqIndex}
-          rolling={diceRolling}
-          onClick={handleDiceClick}
-        />
+        {/* The desk: personal objects around (and occasionally behind or in front of) the type */}
+        <DeskField mode="chaos" />
 
         {/* Headline */}
-        <div
-          style={{
-            position:"relative", zIndex:5,
-            transform:`translateY(${typoTranslateY}px)`,
-            transition: composed ? "transform 1.6s cubic-bezier(0.22,0.1,0.08,1)" : "none",
-          }}
-        >
+        <div style={{ position:"relative", zIndex:TEXT_LAYER }}>
           <p
             className="hero-in"
             style={{ marginBottom:"18px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, lineHeight:1.55 }}
@@ -244,27 +163,24 @@ export default function Home() {
             style={{
               fontFamily:displayFont,
               fontSize:"clamp(56px,9vw,152px)", fontWeight:700, lineHeight:0.95,
-              letterSpacing:typoLetterSpacing, color:C.ink,
-              transition: composed ? "letter-spacing 1.8s cubic-bezier(0.22,0.1,0.08,1)" : "none",
+              letterSpacing:"-0.03em", color:C.ink,
             }}
           >
             I FIGURE<br />THINGS<br />OUT.
           </h1>
         </div>
 
-        {/* Work entry zone */}
-        <div
-          ref={workEntryRef}
-          onClick={() => document.getElementById("work")?.scrollIntoView({ behavior:"smooth" })}
-          style={{ position:"absolute", bottom:0, left:0, right:0, height:"18%", zIndex:25, cursor:"pointer" }}
+        {/* Scroll cue — a compact link, so it never blocks the objects around it */}
+        <a
+          href="#work"
+          onClick={e => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior:"smooth" }); }}
+          style={{ position:"absolute", bottom:"24px", right:"40px", zIndex:25, display:"flex", alignItems:"center", gap:"10px", padding:"8px", textDecoration:"none", opacity:0.45 }}
         >
-          <div style={{ position:"absolute", bottom:"32px", right:"48px", display:"flex", alignItems:"center", gap:"10px", opacity:0.35 }}>
-            <span style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.14em", color:C.ink }}>SELECTED WORK</span>
-            <svg width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden="true">
-              <path d="M5 7L0 0H10L5 7Z" fill={C.ink} />
-            </svg>
-          </div>
-        </div>
+          <span style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.14em", color:C.ink }}>SELECTED WORK</span>
+          <svg width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden="true">
+            <path d="M5 7L0 0H10L5 7Z" fill={C.ink} />
+          </svg>
+        </a>
       </section>
 
       {/* ── SELECTED WORK ─────────────────────────────────────────────────── */}

@@ -61,54 +61,39 @@ button:focus-visible,
 .hero-in      { animation: hero-in 1.0s cubic-bezier(0.22,1,0.36,1) 0.08s both; }
 .hero-in-late { animation: hero-in 1.0s cubic-bezier(0.22,1,0.36,1) 0.28s both; }
 
-/* Dice button roll animation */
-@keyframes dice-roll {
-  0%   { transform: rotate(0deg)   scale(1);    }
-  25%  { transform: rotate(120deg) scale(1.18); }
-  55%  { transform: rotate(280deg) scale(0.92); }
-  80%  { transform: rotate(345deg) scale(1.05); }
-  100% { transform: rotate(360deg) scale(1);    }
-}
-.dice-rolling {
-  animation: dice-roll 0.52s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+/* The hero is its own stacking context so desk objects can sit behind or in
+   front of the headline (see TEXT_LAYER in src/hero/layouts.ts). */
+.hero-section {
+  isolation: isolate;
 }
 
-/* Pile object discovery states — applied by RAF via classList */
-.pile-obj-found {
-  filter: drop-shadow(0 0 10px rgba(194,66,31,0.28)) brightness(1.07) !important;
-  transition: filter 0.18s ease !important;
-}
-.pile-obj-look {
-  filter: brightness(1.04) !important;
-  transition: filter 0.22s ease !important;
-}
-
-/* Hero object stage — the letter-forming object field. Fixed aspect ratio
-   (matches LETTER_BOX in src/hero/letterShapes.ts) so every composition's
-   normalized coordinates map onto it the same way at any size; only its
-   position/scale on the page changes per breakpoint. Recognizable at every
-   size, per the brief, rather than hidden below a cutoff.
-
-   Sized from min(vw, vh) rather than a single hard-coded axis: a
-   width-only percentage would make this fixed-aspect (portrait) box taller
-   than the viewport itself on short/wide screens; a height-only value
-   would let it grow too wide and crowd the headline on narrow/tall ones.
-   Taking the smaller of the two keeps it a considered, contained shape at
-   any viewport proportions instead of just "the right column". Vertically
-   centered so it shares the same visual middle as the (shorter, two-line)
-   text block — one frame, not a text row sitting above a separate object
-   block. */
-.hero-object-stage {
+/* --hw / --hh (the stage's pixel size) are set by DeskField. */
+.desk-stage {
   position: absolute;
-  right: 5%;
-  /* Not a literal 50% center: that put the top edge above the nav (before
-     it gains a background on scroll) and the bottom edge into the
-     "SELECTED WORK" hint's corner. This reads as centered against the
-     text without touching either. */
-  top: max(16%, 100px);
-  width: min(40vw, 42vh);
-  aspect-ratio: 100 / 140;
+  inset: 0;
   pointer-events: none;
+}
+
+/* One light source, upper-left: a tight contact shadow plus a soft cast
+   shadow, falling down and to the right. Shared by photos and stand-ins so
+   they read as objects on the same surface. */
+.desk-obj {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(var(--w) * var(--hw) / 100);
+  transform: translate3d(calc(var(--x) * var(--hw) / 100), calc(var(--y) * var(--hh) / 100), 0)
+             translate(-50%, -50%) rotate(var(--r));
+  filter: drop-shadow(1px 2px 1.5px rgba(48, 34, 20, 0.30))
+          drop-shadow(5px 10px 9px rgba(48, 34, 20, 0.15));
+}
+.desk-obj > img,
+.desk-obj > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
 }
 
 /* Reduced motion */
@@ -141,20 +126,7 @@ button:focus-visible,
   }
   .hero-section {
     padding: 96px 24px 56px !important;
-    min-height: 100vh !important;
-  }
-  /* Below this width the stage moves under the (now much smaller) text
-     instead of beside it. Sized from height, not width — with this aspect
-     ratio, deriving height from a width that's also a % of the *hero's*
-     width let the box get taller than the hero itself. */
-  .hero-object-stage {
-    left: 50%;
-    right: auto;
-    top: auto;
-    bottom: 15%;
-    width: auto;
-    height: 32vh;
-    transform: translateX(-50%);
+    min-height: max(100vh, 700px) !important;
   }
   .section-pad {
     padding-left: 24px !important;
