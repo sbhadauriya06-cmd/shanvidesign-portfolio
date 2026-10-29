@@ -44,7 +44,3 @@ export const T = {
     color:         C.muted,
   },
 } as const;
-
-/** Hero + nav typography. Light and personal on purpose — no heavy weights. */
-export const scriptFont = "'Whisper', 'Brush Script MT', cursive";
-export const monoFont   = "'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace";

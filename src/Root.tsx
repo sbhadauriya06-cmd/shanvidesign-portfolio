@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router";
-import { C, monoFont } from "./tokens";
+import { C } from "./tokens";
 
 // ── Primary nav — order here drives the nav bar. Homepage sections for
 // "Other Things" and "I'm curious about" still exist (see Home.tsx) and
 // stay reachable by scroll or direct link; they're just not in this list.
 export const NAV_ITEMS = [
-  { label: "work",    href: "#work" },
-  { label: "about",   href: "#about" },
-  { label: "contact", href: "#contact" },
+  { label: "WORK",    href: "#work" },
+  { label: "ABOUT",   href: "#about" },
+  { label: "CONTACT", href: "#contact" },
 ] as const;
 
 export default function Root() {
@@ -53,28 +53,28 @@ export default function Root() {
       >
         <Link
           to="/"
-          style={{ fontFamily:monoFont, fontSize:"13px", fontWeight:400, textDecoration:"none", color:C.dim }}
+          style={{ fontSize:"11px", fontWeight:700, letterSpacing:"0.14em", textDecoration:"none", color:C.ink }}
         >
-          Shanvi Bhadauriya
+          SHANVI BHADAURIYA
         </Link>
         <div className="nav-links" style={{ display:"flex", gap:"32px" }}>
           {isDetail ? (
             <Link
               to="/"
-              style={{ fontFamily:monoFont, fontSize:"13px", fontWeight:400, textDecoration:"none", color:C.dim, opacity:0.75, transition:"opacity 0.2s" }}
+              style={{ fontSize:"11px", fontWeight:500, letterSpacing:"0.1em", textDecoration:"none", color:C.ink, opacity:0.5, transition:"opacity 0.2s" }}
               onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}
             >
-              ← index
+              ← INDEX
             </Link>
           ) : (
             isHome && NAV_ITEMS.map(item => (
               <a
                 key={item.href}
                 href={item.href}
-                style={{ fontFamily:monoFont, fontSize:"13px", fontWeight:400, textDecoration:"none", color:C.dim, opacity:0.75, transition:"opacity 0.2s" }}
+                style={{ fontSize:"11px", fontWeight:500, letterSpacing:"0.1em", textDecoration:"none", color:C.ink, opacity:0.5, transition:"opacity 0.2s" }}
                 onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
-                onMouseLeave={e => (e.currentTarget.style.opacity = "0.75")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "0.5")}
               >
                 {item.label}
               </a>

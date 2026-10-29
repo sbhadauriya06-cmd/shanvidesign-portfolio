@@ -3,9 +3,6 @@
    revert. Space Grotesk tops out at 700 (no 800/900), so display elements
    using it are set to weight 700 rather than the body face's 800. */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap');
-/* Hero + navigation type: a light pen-signature script for the name and a
-   light monospace for everything else (see scriptFont / monoFont in tokens.ts). */
-@import url('https://fonts.googleapis.com/css2?family=Whisper&family=DM+Mono:wght@300;400&display=swap');
 @import 'tailwindcss';
 
 html,
@@ -64,41 +61,13 @@ button:focus-visible,
 .hero-in      { animation: hero-in 1.0s cubic-bezier(0.22,1,0.36,1) 0.08s both; }
 .hero-in-late { animation: hero-in 1.0s cubic-bezier(0.22,1,0.36,1) 0.28s both; }
 
-/* The name is the page's primary identity. Sized relative to the viewport
-   (about a third of its width on desktop, like a signature) rather than
-   forced bold — it earns presence from scale and space, not weight. When
-   the layout stacks (phones, portrait tablets) it breaks onto two lines so
-   it can stay large. Keep the media query in step with useIsMobile.ts. */
-.hero-name {
-  font-size: clamp(56px, 6.2vw, 132px);
-  line-height: 1.12;
-  letter-spacing: 0;
-}
-.hero-name > span { display: inline; }
-@media (max-width: 768px), (max-aspect-ratio: 9/10) {
-  .hero-name { font-size: clamp(60px, 17vw, 128px); line-height: 1.02; }
-  .hero-name > span { display: block; }
-}
-
 /* The hero is its own stacking context so desk objects can sit behind or in
    front of the headline (see TEXT_LAYER in src/hero/layouts.ts). */
 .hero-section {
   isolation: isolate;
 }
 
-/* --hw / --hh (the stage's pixel size) are set by DeskField. --hu is the unit
-   object widths are measured in: the stage width, but never more than 1.6x
-   its height. Without that cap, a wide, short window would blow objects up
-   relative to the height they have to fit in. At ordinary laptop proportions
-   (1.6:1) and on tall/portrait screens it is simply the width. */
-.desk-stage {
-  --hu: min(var(--hw), calc(var(--hh) * 1.6));
-}
-/* Stacked layout: on a tall screen the same cap keeps objects from growing
-   with the width alone and crowding the vertical bands they have to fit in. */
-@media (max-width: 768px), (max-aspect-ratio: 9/10) {
-  .desk-stage { --hu: min(var(--hw), calc(var(--hh) * 0.5)); }
-}
+/* --hw / --hh (the stage's pixel size) are set by DeskField. */
 .desk-stage {
   position: absolute;
   inset: 0;
@@ -112,7 +81,7 @@ button:focus-visible,
   position: absolute;
   left: 0;
   top: 0;
-  width: calc(var(--w) * var(--hu) / 100);
+  width: calc(var(--w) * var(--hw) / 100);
   transform: translate3d(calc(var(--x) * var(--hw) / 100), calc(var(--y) * var(--hh) / 100), 0)
              translate(-50%, -50%) rotate(var(--r));
   filter: drop-shadow(1px 2px 1.5px rgba(48, 34, 20, 0.30))
@@ -146,9 +115,6 @@ button:focus-visible,
 @media (max-width: 768px) {
   .nav-inner {
     padding: 20px 24px !important;
-    flex-wrap: wrap !important;
-    column-gap: 16px !important;
-    row-gap: 6px !important;
   }
   /* 5 nav items (incl. "I'M CURIOUS ABOUT") don't fit one row at mobile
      widths — wrap instead of overflowing off-screen. */
@@ -159,8 +125,8 @@ button:focus-visible,
     column-gap: 16px !important;
   }
   .hero-section {
-    padding: 56px 24px 100px !important;
-    min-height: max(100svh, 700px) !important;
+    padding: 96px 24px 56px !important;
+    min-height: max(100vh, 700px) !important;
   }
   .section-pad {
     padding-left: 24px !important;
