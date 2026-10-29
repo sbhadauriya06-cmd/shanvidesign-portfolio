@@ -94,6 +94,11 @@ button:focus-visible,
 .desk-stage {
   --hu: min(var(--hw), calc(var(--hh) * 1.6));
 }
+/* Stacked layout: on a tall screen the same cap keeps objects from growing
+   with the width alone and crowding the vertical bands they have to fit in. */
+@media (max-width: 768px), (max-aspect-ratio: 9/10) {
+  .desk-stage { --hu: min(var(--hw), calc(var(--hh) * 0.5)); }
+}
 .desk-stage {
   position: absolute;
   inset: 0;
@@ -141,6 +146,9 @@ button:focus-visible,
 @media (max-width: 768px) {
   .nav-inner {
     padding: 20px 24px !important;
+    flex-wrap: wrap !important;
+    column-gap: 16px !important;
+    row-gap: 6px !important;
   }
   /* 5 nav items (incl. "I'M CURIOUS ABOUT") don't fit one row at mobile
      widths — wrap instead of overflowing off-screen. */
@@ -152,7 +160,7 @@ button:focus-visible,
   }
   .hero-section {
     padding: 56px 24px 100px !important;
-    min-height: max(100vh, 700px) !important;
+    min-height: max(100svh, 700px) !important;
   }
   .section-pad {
     padding-left: 24px !important;

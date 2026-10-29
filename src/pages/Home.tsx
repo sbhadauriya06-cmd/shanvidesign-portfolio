@@ -144,7 +144,7 @@ export default function Home() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         className="hero-section"
-        style={{ position:"relative", minHeight:"max(100vh, 660px)", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"64px 48px 100px" }}
+        style={{ position:"relative", minHeight:"max(100svh, 660px)", overflowX:"clip", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"64px 48px 100px" }}
       >
 
         {/* The desk: objects hug the outer edges and leave the middle to the name */}

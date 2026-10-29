@@ -13,21 +13,17 @@
 export type ObjectId =
   | "dream" | "camera" | "spraycan" | "paint" | "wax" | "ticket"
   | "lighter" | "earphones" | "nametag"
-  | "notebook" | "pencil" | "receipt" | "polaroidA" | "polaroidB";
+  | "diary" | "pencil" | "shavings" | "polaroid";
 
 export interface DeskObject {
   id: ObjectId;
-  /** "photo" = real cutout in public/hero-objects; "placeholder" = quiet vector stand-in until a real one exists. */
-  kind: "photo" | "placeholder";
-  src?: string;
+  src: string;
   w: number;
   h: number;
 }
 
 const photo = (id: ObjectId, file: string, w: number, h: number): DeskObject =>
-  ({ id, kind: "photo", src: `/hero-objects/${file}.webp`, w, h });
-const placeholder = (id: ObjectId, w: number, h: number): DeskObject =>
-  ({ id, kind: "placeholder", w, h });
+  ({ id, src: `/hero-objects/${file}.webp`, w, h });
 
 export const OBJECTS: DeskObject[] = [
   photo("dream",     "dream",     916, 403),
@@ -39,11 +35,8 @@ export const OBJECTS: DeskObject[] = [
   photo("lighter",   "lighter",   168, 552),
   photo("earphones", "earphones", 276, 298),
   photo("nametag",   "nametag",   636, 419),
-
-  // Vector stand-ins — to be replaced with real photographs / scans.
-  placeholder("notebook",  400, 500),
-  placeholder("pencil",    300, 20),
-  placeholder("receipt",   120, 300),
-  placeholder("polaroidA", 200, 240),
-  placeholder("polaroidB", 200, 240),
+  photo("diary",     "diary",     726, 445),
+  photo("pencil",    "pencil",    92,  1001),
+  photo("shavings",  "shavings",  524, 536),
+  photo("polaroid",  "polaroid",  773, 665),
 ];

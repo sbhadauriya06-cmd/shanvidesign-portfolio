@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { OBJECTS } from "./objects";
 import { LAYOUTS, type Mode } from "./layouts";
-import PlaceholderArt from "./PlaceholderArt";
 import { useIsMobile } from "./useIsMobile";
 
 /**
@@ -49,11 +48,7 @@ export default function DeskField({ mode }: { mode: Mode }) {
 
         return (
           <div key={obj.id} className="desk-obj" data-object={obj.id} style={style}>
-            {obj.kind === "photo" ? (
-              <img src={obj.src} width={obj.w} height={obj.h} alt="" draggable={false} decoding="async" />
-            ) : (
-              <PlaceholderArt id={obj.id} />
-            )}
+            <img src={obj.src} width={obj.w} height={obj.h} alt="" draggable={false} decoding="async" />
           </div>
         );
       })}

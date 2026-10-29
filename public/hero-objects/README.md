@@ -17,14 +17,15 @@ differ, update its entry in `src/hero/objects.ts` (`src`, `w`, `h`).
 | `lighter.webp` | lighter |
 | `earphones.webp` | earphones + hair claw |
 | `nametag.webp` | "Hello my name is" tag |
+| `diary.webp` | open diary with clips |
+| `pencil.webp` | black pencil |
+| `shavings.webp` | pencil shavings |
+| `polaroid.webp` | polaroid portrait |
 
-These nine were cut out automatically from the studio-background JPGs, so
+All thirteen were cut out automatically from the photos in `Clutter images/`
+(polaroid by its outline, the rest by flood-filling the plain background), so
 edges are good-enough rather than perfect — a hand-made cutout will look
 cleaner.
-
-**Still vector stand-ins** (no photo yet; drawn in `src/hero/PlaceholderArt.tsx`):
-notebook, pencil, receipt, two polaroids. To replace one, add a `photo(...)`
-entry for it in `objects.ts` in place of the `placeholder(...)` one.
 
 Aim for ~2× the largest on-screen size (roughly 300–900px on the long side),
 shot top-down with soft light from the upper left. Don't bake shadows into
