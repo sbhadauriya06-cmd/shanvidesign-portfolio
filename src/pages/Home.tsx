@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { C, displayFont } from "../tokens";
+import { C, displayFont, scriptFont, monoFont } from "../tokens";
 import { useReveal } from "../hooks";
 import SectionHeading from "../components/SectionHeading";
 import Footer from "../components/Footer";
@@ -144,43 +144,32 @@ export default function Home() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         className="hero-section"
-        style={{ position:"relative", minHeight:"max(100vh, 660px)", overflow:"hidden", display:"flex", flexDirection:"column", justifyContent:"flex-start", padding:"clamp(100px,13vh,152px) 48px 88px" }}
+        style={{ position:"relative", minHeight:"max(100vh, 660px)", overflow:"hidden", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", textAlign:"center", padding:"64px 48px 100px" }}
       >
 
-        {/* The desk: personal objects around (and occasionally behind or in front of) the type */}
+        {/* The desk: objects hug the outer edges and leave the middle to the name */}
         <DeskField mode="chaos" />
 
-        {/* Headline */}
         <div style={{ position:"relative", zIndex:TEXT_LAYER }}>
-          <p
-            className="hero-in"
-            style={{ marginBottom:"18px", fontSize:"clamp(14px,1.25vw,17px)", fontWeight:400, color:C.muted, lineHeight:1.55 }}
-          >
-            I&apos;m Shanvi, a product designer.
-          </p>
           <h1
-            className="hero-in"
-            style={{
-              fontFamily:displayFont,
-              fontSize:"clamp(56px,9vw,152px)", fontWeight:700, lineHeight:0.95,
-              letterSpacing:"-0.03em", color:C.ink,
-            }}
+            className="hero-in hero-name"
+            style={{ fontFamily:scriptFont, fontWeight:400, color:C.dim }}
           >
-            I FIGURE<br />THINGS<br />OUT.
+            <span>Shanvi</span> <span>Bhadauriya</span>
           </h1>
+          <p
+            className="hero-in-late"
+            style={{ marginTop:"6px", fontFamily:monoFont, fontSize:"15px", fontWeight:400, color:C.dim, lineHeight:1.5 }}
+          >
+            Product designer
+          </p>
+          <p
+            className="hero-in-late"
+            style={{ marginTop:"22px", fontFamily:monoFont, fontSize:"clamp(17px,1.5vw,22px)", fontWeight:300, color:C.dim, lineHeight:1.45 }}
+          >
+            I figure things out.
+          </p>
         </div>
-
-        {/* Scroll cue — a compact link, so it never blocks the objects around it */}
-        <a
-          href="#work"
-          onClick={e => { e.preventDefault(); document.getElementById("work")?.scrollIntoView({ behavior:"smooth" }); }}
-          style={{ position:"absolute", bottom:"24px", right:"40px", zIndex:25, display:"flex", alignItems:"center", gap:"10px", padding:"8px", textDecoration:"none", opacity:0.45 }}
-        >
-          <span style={{ fontSize:"10px", fontWeight:600, letterSpacing:"0.14em", color:C.ink }}>SELECTED WORK</span>
-          <svg width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden="true">
-            <path d="M5 7L0 0H10L5 7Z" fill={C.ink} />
-          </svg>
-        </a>
       </section>
 
       {/* ── SELECTED WORK ─────────────────────────────────────────────────── */}

@@ -24,36 +24,39 @@ export const TEXT_LAYER = 10;
 
 export const LAYOUTS: Partial<Record<Mode, { desktop: Layout; mobile: Layout }>> = {
   chaos: {
+    // Wide: everything lives in the outer fifth of each side and the middle is
+    // left clear for the name. Objects are large and bleed off the edges — a
+    // desk seen close up, not a scatter of icons.
     desktop: {
-      // Left / bottom: the notebook bleeds off two edges; a name tag and pencil
-      // sit across its corner. Lighter and wax tuck behind the type.
-      notebook:  { x: 11, y: 92,  w: 26,  r: -7,  z: 2 },
-      nametag:   { x: 25, y: 84,  w: 10,  r: -5,  z: 6 },
-      pencil:    { x: 32, y: 91,  w: 12,  r: 14,  z: 7 },
-      lighter:   { x: 32, y: 62,  w: 3.2, r: -12, z: 4 },
-      wax:       { x: 36, y: 41,  w: 8.5, r: 12,  z: 4 },
-      polaroidA: { x: 41, y: 14,  w: 7,   r: 9,   z: 3 },
+      // Left
+      notebook:  { x: 9,  y: 88,  w: 31,  r: -8,  z: 2 },
+      nametag:   { x: 18, y: 64,  w: 12,  r: -9,  z: 6 },
+      pencil:    { x: 14, y: 93,  w: 14,  r: 11,  z: 7 },
+      lighter:   { x: 4,  y: 42,  w: 3.8, r: -22, z: 4 },
+      receipt:   { x: 5,  y: 19,  w: 5.5, r: -12, z: 2 },
+      polaroidA: { x: 14, y: 21,  w: 8.5, r: 8,   z: 3 },
 
-      // Right: a loose, overlapping pile — spray can leans into the stickers,
-      // the paint tube rests on the earphones.
-      receipt:   { x: 54, y: 15,  w: 5,   r: -12, z: 2 },
-      dream:     { x: 74, y: 22,  w: 24,  r: -4,  z: 3 },
-      spraycan:  { x: 58, y: 43,  w: 5.6, r: 7,   z: 5 },
-      camera:    { x: 79, y: 40,  w: 14,  r: 5,   z: 6 },
-      ticket:    { x: 94, y: 33,  w: 7,   r: 11,  z: 4 },
-      paint:     { x: 68, y: 68,  w: 6.2, r: -26, z: 7 },
-      earphones: { x: 74, y: 79,  w: 9,   r: -8,  z: 6 },
-      polaroidB: { x: 87, y: 78,  w: 7,   r: -7,  z: 5 },
+      // Right
+      dream:     { x: 86, y: 23,  w: 24,  r: -4,  z: 3 },
+      camera:    { x: 83, y: 39,  w: 15,  r: 5,   z: 6 },
+      spraycan:  { x: 96, y: 53,  w: 7,   r: 6,   z: 5 },
+      ticket:    { x: 79, y: 55,  w: 8.5, r: -8,  z: 4 },
+      paint:     { x: 88, y: 71,  w: 7,   r: -24, z: 7 },
+      wax:       { x: 78, y: 77,  w: 10,  r: 14,  z: 5 },
+      earphones: { x: 93, y: 89,  w: 11,  r: -8,  z: 6 },
+      polaroidB: { x: 72, y: 90,  w: 8.5, r: -7,  z: 3 },
     },
+    // Stacked: same idea turned on its side — a cluster above the name and
+    // one below, with the name's band kept clear between them.
     mobile: {
-      wax:       { x: 86, y: 29,  w: 25, r: 12,  z: 4 },
-      dream:     { x: 50, y: 54,  w: 68, r: -3,  z: 3 },
-      camera:    { x: 27, y: 66,  w: 40, r: -7,  z: 5 },
-      spraycan:  { x: 81, y: 68,  w: 15, r: 9,   z: 6 },
-      paint:     { x: 64, y: 77,  w: 14, r: -22, z: 7 },
-      ticket:    { x: 13, y: 80,  w: 17, r: -8,  z: 4 },
-      lighter:   { x: 46, y: 82,  w: 7,  r: 16,  z: 5 },
-      earphones: { x: 34, y: 88,  w: 22, r: 6,   z: 6 },
+      dream:     { x: 38, y: 17,  w: 62,  r: -4,  z: 3 },
+      wax:       { x: 87, y: 24,  w: 24,  r: 12,  z: 4 },
+      camera:    { x: 25, y: 71,  w: 42,  r: -7,  z: 5 },
+      spraycan:  { x: 81, y: 73,  w: 15,  r: 9,   z: 6 },
+      paint:     { x: 61, y: 82,  w: 14,  r: -22, z: 7 },
+      ticket:    { x: 11, y: 86,  w: 17,  r: -8,  z: 4 },
+      lighter:   { x: 43, y: 90,  w: 7,   r: 16,  z: 5 },
+      earphones: { x: 28, y: 94,  w: 22,  r: 6,   z: 6 },
     },
   },
 };
