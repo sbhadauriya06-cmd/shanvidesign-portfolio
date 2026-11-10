@@ -144,3 +144,11 @@
 *.stl                filter=lfs diff=lfs merge=lfs -text
 *.nc                 filter=lfs diff=lfs merge=lfs -text
 *.mat                filter=lfs diff=lfs merge=lfs -text
+
+# ---------------------------------------------------------------------------
+# Site assets
+# ---------------------------------------------------------------------------
+# Files in public/ are served as-is by the host. Vercel doesn't download LFS
+# files unless that's switched on per project, so these stay ordinary git
+# objects (otherwise the site serves LFS pointer text instead of images).
+public/** !filter !diff !merge -text
