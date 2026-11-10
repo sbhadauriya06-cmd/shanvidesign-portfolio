@@ -2,7 +2,7 @@
 /* Homepage type, from the Figma file: DM Sans for everything small, Boska
    for the serif. Figma's desktop serif is Bell MT, which isn't a web font, so
    it's used only where a visitor already has it installed (see --serif). */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;1,9..40,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,200&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=boska@400,401,700&display=swap');
 @import 'tailwindcss';
 
@@ -48,6 +48,11 @@ body {
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html.is-dark-page,
+html.is-dark-page body {
+  background-color: #000;
 }
 
 ::selection {
@@ -620,6 +625,55 @@ button:focus-visible,
 .contact-links a:hover,
 .contact-links a:focus-visible {
   text-decoration-color: currentColor;
+}
+
+/* ── Case studies drawn on a 1440px Figma frame ─────────────────────────── */
+.case {
+  container-type: inline-size;
+  background: #000;
+}
+.case-hero {
+  --u: calc(100cqw / 1440);
+  position: relative;
+  height: calc(1340 * var(--u));
+  overflow: clip;
+}
+.case-hero > img,
+.case-slice {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.case-chip {
+  position: absolute;
+  left: calc(88 * var(--u));
+  font-family: var(--sans);
+  font-optical-sizing: auto;
+}
+.case-chip-label {
+  margin-left: calc(15 * var(--u));
+  font: 600 calc(20 * var(--u)) / normal var(--sans);
+  color: #954c28;
+}
+.case-chip-value {
+  display: inline-block;
+  margin-top: calc(3.6 * var(--u));
+  padding: calc(12 * var(--u)) calc(24 * var(--u));
+  border: 1px solid #954c28;
+  border-radius: calc(36 * var(--u));
+  background: rgba(255, 239, 232, 0.2);
+  font: 400 calc(24 * var(--u)) / normal var(--sans);
+  letter-spacing: -0.017em;
+  color: #fff;
+  white-space: nowrap;
+}
+.case-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Reduced motion */

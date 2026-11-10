@@ -1,79 +1,61 @@
-import { C } from "../../tokens";
-import { useReveal } from "../../hooks";
-import ProjectHero from "../../components/ProjectHero";
-import ProjectNav from "../../components/ProjectNav";
-import CaseStudySection from "../../components/CaseStudySection";
-import Reflection from "../../components/Reflection";
-import MediaBlock from "../../components/MediaBlock";
-import Footer from "../../components/Footer";
-
-const ACCENT = "#C2421F";
-
 /**
- * Placeholder content below — replace every bracketed line with the real
- * case study. Structure (which sections exist, and in what order) is free
- * to change; this is this project's own file, not a shared template.
+ * The Kutir case study, exactly as designed in Figma ("Kutir Case", node
+ * 241:2599 on the "Mac & mobile" page): a 1440×33244 frame on black.
+ *
+ * The opening hero is rebuilt from its own layers (photo, logo, laptop and
+ * fades baked into one image, the three detail chips as real text). Everything
+ * below it is the frame itself, exported at 2x and cut into 1200px-tall
+ * slices so it loads progressively. It scales with the page width, like the
+ * homepage sections. Do not edit the content here: change it in Figma and
+ * re-export (scratchpad tooling: kutir.cjs).
  */
+
+/** Slices of the frame below the hero, top to bottom, with their height in Figma px. */
+const SLICES: [string, number][] = [
+  ["01", 1200], ["02", 1200], ["03", 1200], ["04", 1200], ["05", 1200], ["06", 1200],
+  ["07", 1200], ["08", 1200], ["09", 1200], ["10", 1200], ["11", 1200], ["12", 1200],
+  ["13", 1200], ["14", 1200], ["15", 1200], ["16", 1200], ["17", 1200], ["18", 1200],
+  ["19", 1200], ["20", 1200], ["21", 1200], ["22", 1200], ["23", 1200], ["24", 1200],
+  ["25", 1200], ["26", 1200], ["27", 704],
+];
+
+const CHIPS: [string, string, number][] = [
+  ["Domain", "UI UX", 867],
+  ["Duration", "6 + 2 weeks", 978],
+  ["Location", "Bhopal, MP", 1089],
+];
+
+const srcSet = (name: string) => `/kutir/${name}.webp 1440w, /kutir/${name}@2x.webp 2880w`;
+
 export default function Kutir() {
-  const revealOverview = useReveal(60);
-
   return (
-    <div>
-      <ProjectHero
-        num="01"
-        title="KUTIR"
-        overview="A product design / UX case study."
-        year="2024"
-        type="PRODUCT DESIGN · UX/UI"
-        accent={ACCENT}
-      />
+    <main className="case">
+      <h1 className="case-sr">Kutir case study</h1>
 
-      <section ref={revealOverview.ref} style={{ padding:"80px 48px", borderBottom:`1px solid ${C.border}`, background:C.surface, ...revealOverview.revealStyle }}>
-        <div style={{ display:"grid", gridTemplateColumns:"200px 1fr", gap:"80px", maxWidth:"1100px" }} className="work-grid">
-          <div>
-            <p style={{ fontSize:"10px", fontWeight:700, letterSpacing:"0.14em", color:C.muted, marginBottom:"16px" }}>ROLE</p>
-            <p style={{ fontSize:"14.5px", fontWeight:400, color:C.dim, lineHeight:1.7 }}>[Placeholder — your role and scope on this project.]</p>
+      <div className="case-hero">
+        <img src="/kutir/kutir-hero.webp" srcSet={srcSet("kutir-hero")} sizes="100vw" width={1440} height={1340} alt="" />
+        {CHIPS.map(([label, value, y]) => (
+          <div key={label} className="case-chip" style={{ top: `calc(${y} * var(--u))` }}>
+            <p className="case-chip-label">{label}</p>
+            <p className="case-chip-value">{value}</p>
           </div>
-          <div>
-            <p style={{ fontSize:"10px", fontWeight:700, letterSpacing:"0.14em", color:C.muted, marginBottom:"16px" }}>THE PROBLEM</p>
-            <p style={{ fontSize:"clamp(16px,1.6vw,19px)", fontWeight:400, color:C.ink, lineHeight:1.7, maxWidth:"680px" }}>[Placeholder — what problem were you actually solving, and for whom?]</p>
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
-      <CaseStudySection index={1} heading="THE PROBLEM" accent={ACCENT}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"56px", alignItems:"start" }} className="work-grid">
-          <p style={{ fontSize:"clamp(15px,1.5vw,18px)", fontWeight:400, lineHeight:1.75, color:C.dim }}>
-            [Placeholder — what did you notice, and why was it worth investigating?]
-          </p>
-          <MediaBlock label="Add project visual" tall />
-        </div>
-      </CaseStudySection>
-
-      <CaseStudySection index={2} heading="THE PROCESS" accent={ACCENT} delay={80}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"56px", alignItems:"start" }} className="work-grid">
-          <MediaBlock label="Add project visual" tall />
-          <p style={{ fontSize:"clamp(15px,1.5vw,18px)", fontWeight:400, lineHeight:1.75, color:C.dim }}>
-            [Placeholder — how did you get from the problem to a direction? Real research/process only, no invented numbers.]
-          </p>
-        </div>
-      </CaseStudySection>
-
-      <CaseStudySection index={3} heading="THE OUTCOME" accent={ACCENT} delay={160}>
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"56px", alignItems:"start" }} className="work-grid">
-          <p style={{ fontSize:"clamp(15px,1.5vw,18px)", fontWeight:400, lineHeight:1.75, color:C.dim }}>
-            [Placeholder — what shipped, and what changed as a result? Real outcomes only, no invented metrics.]
-          </p>
-          <MediaBlock label="Add project visual" tall />
-        </div>
-      </CaseStudySection>
-
-      <Reflection accent={ACCENT}>
-        [Space for a reflection or key insight — add the sentence that made this project worthwhile.]
-      </Reflection>
-
-      <ProjectNav prevSlug="udgam-branding" prevTitle="UDGAM BRANDING" nextSlug="kalakshetra" nextTitle="KALAKSHETRA" />
-      <Footer />
-    </div>
+      {SLICES.map(([n, h], i) => (
+        <img
+          key={n}
+          className="case-slice"
+          src={`/kutir/kutir-${n}.webp`}
+          srcSet={srcSet(`kutir-${n}`)}
+          sizes="100vw"
+          width={1440}
+          height={h}
+          loading={i < 2 ? "eager" : "lazy"}
+          decoding="async"
+          alt=""
+        />
+      ))}
+    </main>
   );
 }
