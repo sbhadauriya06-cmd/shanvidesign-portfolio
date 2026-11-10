@@ -31,7 +31,14 @@ export default function Hero() {
     window.setTimeout(() => setMoving(false), 850);
   };
 
-  const items = frame.rows.map(([id, cx, cy, w, h, r], z) => {
+  // The page keeps one fixed order of objects (the Chaos frame's) whatever the
+  // mode: each mode's layer order only sets z-index. If the order followed the
+  // mode, React would move elements around the page on every toggle, and a
+  // moved element jumps to its new place instead of animating there.
+  const order = FRAMES[mobile ? "mobile" : "desktop"].chaos.rows;
+  const items = order.map(([id]) => {
+    const z = frame.rows.findIndex(row => row[0] === id);
+    const [, cx, cy, w, h, r] = frame.rows[z];
     const style = { "--cx": cx, "--cy": cy, "--w": w, "--h": h, "--r": `${r}deg`, zIndex: z } as CSSProperties;
     return { id, style };
   });
