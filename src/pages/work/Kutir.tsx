@@ -1,6 +1,6 @@
 /**
  * The Kutir case study, exactly as designed in Figma ("Kutir Case", node
- * 241:2599 on the "Mac & mobile" page): a 1440×33244 frame on black.
+ * 256:3676 on the "Mac & mobile" page): a 1440×43498 frame on black.
  *
  * The opening hero is rebuilt from its own layers (photo, logo, laptop and
  * fades baked into one image, the three detail chips as real text). Everything
@@ -16,7 +16,8 @@ const SLICES: [string, number][] = [
   ["07", 1200], ["08", 1200], ["09", 1200], ["10", 1200], ["11", 1200], ["12", 1200],
   ["13", 1200], ["14", 1200], ["15", 1200], ["16", 1200], ["17", 1200], ["18", 1200],
   ["19", 1200], ["20", 1200], ["21", 1200], ["22", 1200], ["23", 1200], ["24", 1200],
-  ["25", 1200], ["26", 1200], ["27", 704],
+  ["25", 1200], ["26", 1200], ["27", 1200], ["28", 1200], ["29", 1200], ["30", 1200],
+  ["31", 1200], ["32", 1200], ["33", 1200], ["34", 1200], ["35", 1200], ["36", 158],
 ];
 
 const CHIPS: [string, string, number][] = [

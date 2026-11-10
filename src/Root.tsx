@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router";
 import { C } from "./tokens";
 
 const DARK_PAGES = ["/work/kutir"];
+const KALA_PAGE = "/work/kalakshetra";
 
 export default function Root() {
   const location = useLocation();
@@ -21,9 +22,13 @@ export default function Root() {
   useEffect(() => {
     document.documentElement.classList.toggle("is-dark-page", dark);
   }, [dark]);
+  const kala = location.pathname === KALA_PAGE;
+  useEffect(() => {
+    document.documentElement.classList.toggle("is-kala-page", kala);
+  }, [kala]);
 
   return (
-    <div style={{ background: dark ? "#000" : C.paper, color: C.ink, fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
+    <div style={{ background: dark ? "#000" : kala ? "#F8F4EC" : C.paper, color: C.ink, fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}>
       <div key={location.pathname} className="page-enter">
         <Outlet />
       </div>

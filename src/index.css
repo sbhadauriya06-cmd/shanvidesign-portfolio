@@ -3,6 +3,7 @@
    for the serif. Figma's desktop serif is Bell MT, which isn't a web font, so
    it's used only where a visitor already has it installed (see --serif). */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap');
 @import url('https://api.fontshare.com/v2/css?f[]=boska@400,401,700&display=swap');
 @import 'tailwindcss';
 
@@ -53,6 +54,10 @@ body {
 html.is-dark-page,
 html.is-dark-page body {
   background-color: #000;
+}
+html.is-kala-page,
+html.is-kala-page body {
+  background-color: #F8F4EC;
 }
 
 ::selection {
@@ -667,6 +672,119 @@ button:focus-visible,
   color: #fff;
   white-space: nowrap;
 }
+/* Kalakshetra: light frame, fixed nav bar with link hotspots */
+.kala {
+  position: relative;
+  background: #F8F4EC;
+}
+.kala-nav {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.kala-nav > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.kala-hotspot {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+}
+.kala-link {
+  --u: calc(100cqw / 1440);
+}
+.kala-hotspot:focus-visible {
+  outline: 2px solid #A51C24;
+  outline-offset: 2px;
+}
+/* Review cards: hidden until hovered, then their layers smart-animate from
+   the default state (which matches the slice below) to the hover state. */
+.kala-review {
+  --u: calc(100cqw / 1440);
+  --ease: 0.35s ease-out;
+  position: absolute;
+  overflow: hidden;
+  border-radius: calc(10 * var(--u));
+  background: #F8F4EC;
+  box-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(26, 13, 5, 0);
+  opacity: 0;
+  transition: opacity 0s linear 0.35s, box-shadow var(--ease);
+}
+.kala-review::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(37, 34, 32, 0.12);
+  border-radius: inherit;
+  pointer-events: none;
+}
+.kala-review:hover {
+  opacity: 1;
+  box-shadow: 0 calc(20 * var(--u)) calc(40 * var(--u)) rgba(26, 5, 5, 0.28);
+  transition: opacity 0s, box-shadow var(--ease);
+}
+.kala-box {
+  position: absolute;
+  display: block;
+  max-width: none;
+  left: calc(var(--x0) * var(--u));
+  top: calc(var(--y0) * var(--u));
+  width: calc(var(--w0) * var(--u));
+  height: calc(var(--h0) * var(--u));
+  transition: left var(--ease), top var(--ease), width var(--ease), height var(--ease), opacity var(--ease);
+}
+.kala-review:hover .kala-box {
+  left: calc(var(--x1) * var(--u));
+  top: calc(var(--y1) * var(--u));
+  width: calc(var(--w1) * var(--u));
+  height: calc(var(--h1) * var(--u));
+}
+.kala-dim {
+  position: absolute;
+  inset: 0;
+  background: #131110;
+  opacity: 0;
+  transition: opacity var(--ease);
+}
+.kala-hl {
+  overflow: hidden;
+  border-radius: calc(3 * var(--u));
+}
+.kala-marker {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 219, 89, 0.28);
+  mix-blend-mode: multiply;
+}
+.kala-underline {
+  background: #A8161C;
+}
+.kala-hl,
+.kala-underline,
+.kala-tag {
+  opacity: 0;
+  transition: left var(--ease), top var(--ease), width var(--ease), height var(--ease), opacity var(--ease);
+}
+.kala-tag {
+  position: absolute;
+  left: calc(12 * var(--u));
+  top: calc(12 * var(--u));
+  height: calc(36 * var(--u));
+  padding: calc(7 * var(--u)) calc(12 * var(--u)) 0;
+  border-radius: calc(3 * var(--u));
+  background: #A8161C;
+  color: #F8F4EC;
+  font: italic 400 calc(17 * var(--u)) / normal "Instrument Serif", serif;
+  white-space: nowrap;
+}
+.kala-review:hover .kala-dim { opacity: 0.68; }
+.kala-review:hover .kala-hl,
+.kala-review:hover .kala-underline,
+.kala-review:hover .kala-tag { opacity: 1; }
 .case-sr {
   position: absolute;
   width: 1px;
