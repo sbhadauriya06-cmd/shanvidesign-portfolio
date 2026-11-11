@@ -105,15 +105,22 @@ button:focus-visible,
 /* ── Hero ─────────────────────────────────────────────────────────────────
    The Figma frame at the page's width: Hero.tsx sets the frame's proportions
    and --s (page width ÷ frame width); layout.ts supplies each item's numbers. */
-.hero {
+/* The hero is pinned while the page scrolls through .hero-scroll, and that
+   scroll (--p, 0 → 1, set by Hero.tsx) moves every object from its Chaos row
+   to its Order row. It stays put at the top of the window until the tidying
+   is done, and only then scrolls away. */
+.hero-scroll {
+  --hero-h: calc(var(--fh) * var(--s, 1) * 1px);
   position: relative;
+  height: calc(var(--hero-h) + var(--tidy) * 100vh);
+}
+.hero {
+  --p: 0;
+  position: sticky;
+  top: 0;
   overflow: clip;
   background: var(--paper);
-  transition: background 0.8s ease-out;
-  --tx: -50%;
-}
-.hero.is-order {
-  --tx: 0%;
+  --tx: calc(-50% + 50% * var(--p));
 }
 .hero-stage {
   position: absolute;
@@ -121,16 +128,20 @@ button:focus-visible,
   isolation: isolate;
 }
 .hero-obj,
-.hero-text,
-.hero-toggle {
+.hero-text {
   position: absolute;
   left: 0;
   top: 0;
+  --cx: calc(var(--cx0) + (var(--cx1) - var(--cx0)) * var(--p));
+  --cy: calc(var(--cy0) + (var(--cy1) - var(--cy0)) * var(--p));
+  --w: calc(var(--w0) + (var(--w1) - var(--w0)) * var(--p));
+  --h: calc(var(--h0) + (var(--h1) - var(--h0)) * var(--p));
+  --r: calc((var(--r0) + (var(--r1) - var(--r0)) * var(--p)) * 1deg);
   --px: calc(var(--cx) * var(--s) * 1px);
   --py: calc(var(--cy) * var(--s) * 1px);
+  will-change: transform;
 }
-.hero-obj,
-.hero-toggle {
+.hero-obj {
   width: calc(var(--w) * var(--s) * 1px);
   height: calc(var(--h) * var(--s) * 1px);
   transform: translate3d(var(--px), var(--py), 0) translate(-50%, -50%) rotate(var(--r));
@@ -138,11 +149,6 @@ button:focus-visible,
 .hero-text {
   transform: translate3d(var(--px), var(--py), 0) translate(var(--tx), -50%);
   white-space: nowrap;
-}
-.is-moving .hero-obj,
-.is-moving .hero-text,
-.is-moving .hero-toggle {
-  transition: transform 0.8s ease-out, width 0.8s ease-out, height 0.8s ease-out;
 }
 .hero-obj {
   --nb-w: calc(var(--w) * var(--s) * 1px);
@@ -175,31 +181,6 @@ button:focus-visible,
   letter-spacing: 0.0125em;
   color: var(--verb-color);
 }
-.hero-toggle {
-  border: 1px solid #000;
-  border-radius: 999px;
-  background: transparent;
-  cursor: pointer;
-}
-.hero-toggle-knob {
-  position: absolute;
-  top: -1px;
-  bottom: -1px;
-  left: -1px;
-  width: calc(50% + 1px);
-  border: 1px solid #848484;
-  border-radius: 999px;
-  background: var(--paper);
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.25);
-  transition: left 0.3s ease-out, background 0.3s ease-out, border-color 0.3s ease-out, box-shadow 0.3s ease-out;
-}
-.is-order .hero-toggle-knob {
-  left: 50%;
-  border-color: #191919;
-  background: #191919;
-  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.25);
-}
-
 /* ── Notebook (percentages of its Figma frame) ────────────────────────────── */
 .notebook {
   position: absolute;
