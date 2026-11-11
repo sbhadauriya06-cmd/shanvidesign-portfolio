@@ -24,10 +24,6 @@
 @media (max-width: 768px), (max-aspect-ratio: 9/10) {
   :root {
     --paper: #fff;
-  }
-}
-@media (max-aspect-ratio: 9/10) {
-  :root {
     --serif: 'Boska', Georgia, serif;
     --name-size: 48;
     --name-tracking: 0;

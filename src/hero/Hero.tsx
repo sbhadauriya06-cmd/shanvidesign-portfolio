@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { FRAMES, OVERSCAN, SHADOWED, type ItemId } from "./layout";
-import { useIsPortrait } from "./useIsMobile";
+import { useIsMobile } from "./useIsMobile";
 import Notebook from "../components/Notebook";
 
 const TEXT: ItemId[] = ["role", "verb", "shanvi", "bhadauriya"];
@@ -11,7 +11,8 @@ const TIDY_DISTANCE = 1.2;
 export default function Hero() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
-  const mobile = useIsPortrait();
+  // Same switch as the sections below, so the mobile page always gets the mobile hero.
+  const mobile = useIsMobile();
   const frames = FRAMES[mobile ? "mobile" : "desktop"];
   const { chaos, order } = frames;
   // Past halfway, the pile takes the Order frame's layer order.
