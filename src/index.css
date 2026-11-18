@@ -313,7 +313,9 @@ button:focus-visible,
 }
 .work-row-text {
   display: block;
-  width: calc(470 * var(--u));
+  /* Figma's 470 fitted placeholder text; 510 keeps every real description
+     to three lines inside the 200px row (and inside the box when zoomed). */
+  width: calc(510 * var(--u));
 }
 .work-row h3 {
   font: italic 400 calc(64 * var(--u)) / 1 var(--serif);
@@ -762,6 +764,50 @@ button:focus-visible,
 .kala-review:hover .kala-hl,
 .kala-review:hover .kala-underline,
 .kala-review:hover .kala-tag { opacity: 1; }
+/* GoGHY: presentation slides stacked edge to edge at the page's width */
+.slides {
+  background: #fff;
+}
+.slides > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* A project page that isn't ready yet (Reframe) */
+.soon {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  font-family: var(--sans);
+}
+.soon-title {
+  font: italic 400 clamp(48px, 8vw, 112px) / 1 var(--serif);
+  letter-spacing: -0.02em;
+  color: #000;
+}
+.soon-label {
+  font: 200 clamp(20px, 2.2vw, 32px) / 1.2 var(--sans);
+  letter-spacing: 0.0125em;
+  color: #666;
+}
+.soon-back {
+  margin-top: 24px;
+  font: 300 16px / 1 var(--sans);
+  color: #191919;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(25, 25, 25, 0.3);
+}
+.soon-back:hover,
+.soon-back:focus-visible {
+  text-decoration-color: currentColor;
+}
 .case-sr {
   position: absolute;
   width: 1px;

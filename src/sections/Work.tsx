@@ -5,13 +5,10 @@ import { useIsMobile } from "../hero/useIsMobile";
 /** left, top, width, height in the Figma frame's pixels; `grow` = hover scale */
 type Layer = { src: string; x: number; y: number; w: number; h: number; grow?: number };
 
-// Placeholder copy, as in Figma, until the real descriptions are written.
-const LOREM = "LoremIpsum LoremIpsum LoremIpsum LoremIpsum LoremIpsum LoremIpsum LoremIpsum LoremIpsum";
-
 const PROJECTS: { slug: string; title: string; text: string; cover: string; preview: Layer[] }[] = [
   {
     slug: "kutir", title: "Kutir", cover: "cover-kutir",
-    text: "A unified platform leveraging AI and transparency to maximize resident engagement and trust.",
+    text: "Running a housing society shouldn’t be a second job. Kutir keeps it in your pocket: it brings up what’s urgent, readies the next step, and acts on your word.",
     preview: [
       { src: "kutir-back", x: 863, y: 320.2, w: 503, h: 188.4 },
       { src: "kutir-phone1", x: 894, y: 75, w: 138, h: 328, grow: 1.12 },
@@ -19,14 +16,16 @@ const PROJECTS: { slug: string; title: string; text: string; cover: string; prev
     ],
   },
   {
-    slug: "kalakshetra", title: "Kalakshetra", cover: "cover-kala", text: LOREM,
+    slug: "kalakshetra", title: "Kalakshetra", cover: "cover-kala",
+    text: "A digital companion that helps visitors discover, navigate and understand Srimanta Sankaradeva Kalakshetra, one of Assam’s best-known cultural institutions.",
     preview: [
       { src: "kala-back", x: 929, y: 206, w: 463, h: 412 },
       { src: "kala-phones", x: 844, y: 294, w: 416, h: 414, grow: 1.22 },
     ],
   },
   {
-    slug: "reframe-india", title: "Reframe", cover: "cover-reframe", text: LOREM,
+    slug: "reframe-india", title: "Reframe", cover: "cover-reframe",
+    text: "A civic action platform that helps citizens, students, NGOs and journalists move from demanding change to driving it.",
     preview: [
       { src: "reframe-back", x: 1000, y: 328, w: 392, h: 272 },
       { src: "reframe-phone1", x: 869.3, y: 431.3, w: 181.5, h: 379.5, grow: 1.09 },
@@ -34,7 +33,8 @@ const PROJECTS: { slug: string; title: string; text: string; cover: string; prev
     ],
   },
   {
-    slug: "goghy", title: "GoGHY", cover: "cover-goghy", text: LOREM,
+    slug: "goghy", title: "GoGHY", cover: "cover-goghy",
+    text: "A systems design project making Guwahati’s buses predictable, through clearer bus information at stops and on board and a redesign of the city’s busiest railway gate.",
     preview: [
       { src: "goghy-back", x: 886, y: 519, w: 527.5, h: 283.5 },
       { src: "goghy-stand", x: 881, y: 565, w: 206, h: 363 },
