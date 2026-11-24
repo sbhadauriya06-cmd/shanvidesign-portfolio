@@ -1,13 +1,13 @@
 /**
- * The Kutir case study, exactly as designed in Figma ("Kutir Case", node
- * 256:3676 on the "Mac & mobile" page): a 1440×43498 frame on black.
+ * The Kutir case study, exactly as designed in Figma (file "Kutir-App", page
+ * "Final Case", node 423:1484): a 1440×44212 frame on black.
  *
- * The opening hero is rebuilt from its own layers (photo, logo, laptop and
- * fades baked into one image, the three detail chips as real text). Everything
- * below it is the frame itself, exported at 2x and cut into 1200px-tall
- * slices so it loads progressively. It scales with the page width, like the
- * homepage sections. Do not edit the content here: change it in Figma and
- * re-export (scratchpad tooling: kutir.cjs).
+ * The opening hero is rebuilt from its own layers (photo with the logo, the
+ * laptop cutout and the fade baked into one image, the three detail chips as
+ * real text). Everything below it is the frame itself, exported at 2x and cut
+ * into 1200px-tall slices so it loads progressively. It scales with the page
+ * width, like the homepage sections. Do not edit the content here: change it
+ * in Figma and re-export.
  */
 
 /** Slices of the frame below the hero, top to bottom, with their height in Figma px. */
@@ -17,7 +17,7 @@ const SLICES: [string, number][] = [
   ["13", 1200], ["14", 1200], ["15", 1200], ["16", 1200], ["17", 1200], ["18", 1200],
   ["19", 1200], ["20", 1200], ["21", 1200], ["22", 1200], ["23", 1200], ["24", 1200],
   ["25", 1200], ["26", 1200], ["27", 1200], ["28", 1200], ["29", 1200], ["30", 1200],
-  ["31", 1200], ["32", 1200], ["33", 1200], ["34", 1200], ["35", 1200], ["36", 158],
+  ["31", 1200], ["32", 1200], ["33", 1200], ["34", 1200], ["35", 1200], ["36", 872],
 ];
 
 const CHIPS: [string, string, number][] = [
