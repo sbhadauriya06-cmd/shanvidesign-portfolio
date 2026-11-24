@@ -10,9 +10,9 @@ const PROJECTS: { slug: string; title: string; text: string; cover: string; prev
     slug: "kutir", title: "Kutir", cover: "cover-kutir",
     text: "Running a housing society shouldn’t be a second job. Kutir keeps it in your pocket: it brings up what’s urgent, readies the next step, and acts on your word.",
     preview: [
-      { src: "kutir-back", x: 863, y: 320.2, w: 503, h: 188.4 },
-      { src: "kutir-phone1", x: 894, y: 75, w: 138, h: 328, grow: 1.12 },
-      { src: "kutir-phone2", x: 1037, y: 98, w: 137, h: 326, grow: 1.12 },
+      { src: "kutir-back", x: 863, y: 248, w: 526.2, h: 232.8 },
+      { src: "kutir-phone1", x: 885.4, y: 72.1, w: 155.3, h: 333.7, grow: 1.12 },
+      { src: "kutir-phone2", x: 1052.8, y: 105, w: 155.4, h: 333.9, grow: 1.12 },
     ],
   },
   {
